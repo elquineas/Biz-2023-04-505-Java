@@ -28,6 +28,5 @@ public class VarCB {
 		 * 때문에 반드시 결과를 저장할 변수의 type은 정수형 이어야 한다
 		 */
 		int intYes1 = intNum1 % 2;
-		
 	}
 }
