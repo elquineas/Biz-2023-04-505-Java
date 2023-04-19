@@ -11,6 +11,7 @@ public class ControllerE {
 		for(int i = 2; i<=rNum/2; i++) {
 			if(rNum %i == 0) {
 				pCount++;
+				break;
 			}
 		}
 		System.out.print("랜덤수 : "+rNum);
