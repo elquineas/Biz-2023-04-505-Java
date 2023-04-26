@@ -9,10 +9,9 @@ public class ScoreServiceA {
 	}
 	
 	public static void getStScore(ScoreDto score) {
-		ScoreServiceA sServ = new ScoreServiceA();
-		score.scKor		= sServ.getScore();
-		score.scEng		= sServ.getScore();
-		score.scMath	= sServ.getScore();
+		score.scKor		= getScore();
+		score.scEng		= getScore();
+		score.scMath	= getScore();
 	}
 	
 	public void scorePrint(ScoreDto score) {
@@ -37,16 +36,16 @@ public class ScoreServiceA {
 			math	+= scores[i].scMath;
 			total	+= scores[i].getTotal();
 		}
-		System.out.print("\t \t ");
-		System.out.printf("%3d \t",kor);
-		System.out.printf("%3d \t",eng);
-		System.out.printf("%3d \t",math);
-		System.out.printf("%3d \t",total);
+		System.out.print("\t \t");
+		System.out.printf("%4d \t",kor);
+		System.out.printf("%4d \t",eng);
+		System.out.printf("%4d \t",math);
+		System.out.printf("%4d \t",total);
 		System.out.println();
 	}
 	
 	public void scoreTotalPrint(int kor, int eng, int math, int total) {
-		System.out.printf("\t \t %3d\t %3d\t %3d\t %3d\t \n",
+		System.out.printf("\t \t %4d\t %4d\t %4d\t %4d\t \n",
 				kor,
 				eng,
 				math,
