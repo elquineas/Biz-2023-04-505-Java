@@ -30,7 +30,7 @@ public class ArrayD {
 		System.out.println("학번\t 이름\t 국어\t 영어\t 수학\t 총점\t 평균");
 		System.out.println("-".repeat(55));
 		sServ.scorePrint(scores[0]);
-		
+		System.out.println("=".repeat(55));
 		
 	}
 }
