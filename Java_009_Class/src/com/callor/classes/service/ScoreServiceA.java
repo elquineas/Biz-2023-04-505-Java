@@ -42,6 +42,7 @@ public class ScoreServiceA {
 		System.out.printf("%3d \t",eng);
 		System.out.printf("%3d \t",math);
 		System.out.printf("%3d \t",total);
+		System.out.println();
 	}
 	
 	public void scoreTotalPrint(int kor, int eng, int math, int total) {

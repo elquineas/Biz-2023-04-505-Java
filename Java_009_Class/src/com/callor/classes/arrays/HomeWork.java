@@ -26,6 +26,7 @@ public class HomeWork {
 		}
 		System.out.println("-".repeat(55));
 		sServ.scoreTotalPrint(scores);
+		System.out.println("=".repeat(55));
 				
 	}
 	
