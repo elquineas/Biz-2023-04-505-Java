@@ -1,9 +1,9 @@
-package com.callor.classes.arrays;
+package com.callor.classes;
 
 import com.callor.classes.model.ScoreDto;
 import com.callor.classes.service.ScoreServiceA;
 
-public class HomeWork {
+public class HomeWorkA {
 	public static void main(String[] args) {
 		ScoreDto[] scores = new ScoreDto[10];
 		ScoreServiceA sServ = new ScoreServiceA();
