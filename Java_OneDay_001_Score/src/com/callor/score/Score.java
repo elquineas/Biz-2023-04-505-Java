@@ -6,7 +6,7 @@ import com.callor.score.service.ScoreService;
 public class Score {
 	public static void main(String[] args) {
 		// 가 - 학생 수는 10명으로 합니다.
-		ScoreDto[] student = new ScoreDto[10]; 
+		ScoreDto[] student = new ScoreDto[10];
 		ScoreService sServ = new ScoreService();
 		for(int i = 0; i<student.length; i++) {
 			student[i] = new ScoreDto();
@@ -17,6 +17,9 @@ public class Score {
 			sServ.getScore(student[i]);
 		}
 		// 마 - 배열에 저장된 성적정보를 다음과 같이 리스트로 출력합니다.
+		// 사 - 평균 점수는 소수점이하 2째 자리까지 출력합니다. 
+		// 아 - 점수생성, 점수출력은 ScoreService 클래스를 생성하고 method를 정의하여 실행합니다. 
 		sServ.printScoreList(student);
+		
 	}
 }

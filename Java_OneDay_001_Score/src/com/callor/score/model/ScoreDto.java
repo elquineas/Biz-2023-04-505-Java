@@ -16,6 +16,7 @@ public class ScoreDto {
 		return total;
 	}
 	
+	
 	public float getAvg(ScoreDto score) {
 		int total = score.kor + score.eng + score.math + score.music + score.art;
 		float avg = total/5f;

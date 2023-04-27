@@ -12,7 +12,7 @@ public class ScoreService {
 		score.art   = (int)(Math.random()*50)+51;
 	}
 	
-	public static void printScore(ScoreDto score) { 
+	public static void printScore(ScoreDto score) {
 		System.out.printf("%5s\t ",score.stNum);
 		System.out.printf("%3d\t ",score.kor);
 		System.out.printf("%3d\t ",score.eng);
@@ -24,7 +24,7 @@ public class ScoreService {
 		System.out.println();
 	}
 	
-	public static void printTotalScore(ScoreDto[] score) { 
+	public static void printTotalScore(ScoreDto[] score) {
 		ScoreDto total = new ScoreDto();
 		for(int i = 0; i< score.length; i++) {
 			total.kor   += score[i].kor;
