@@ -15,13 +15,13 @@ public class ScannerG {
 	
 	public static int rGame(int nums) {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("=".repeat(40));
+		System.out.println("=".repeat(50));
 		System.out.println("GAME START");
 		System.out.println("1 ~ 45사이 랜덤수 맞추기");
-		System.out.println(nums);
+//		System.out.println(nums);
 		int sNum = 0;
 		while(true) {
-			System.out.println("-".repeat(40));
+			System.out.println("-".repeat(50));
 			System.out.print("정수만 입력(QUIT : 종료) >> ");
 			String prime = scan.nextLine();
 			if(prime.equals("QUIT")) {
@@ -83,14 +83,14 @@ public class ScannerG {
 		for(int i = 0; i < nums.length; i++) {
 			result = rGame(nums[i]);
 			if(result < 0 ||  i == nums.length-1) {
-				System.out.println("=".repeat(40));
+				System.out.println("=".repeat(50));
 				System.out.println("GAME OVER");
 				nums = ascendingOrder(nums);
 				for(int j = 0; j < nums.length; j++) {
 					System.out.print(nums[j] + "\t");
 				}
 				System.out.println();
-				System.out.println("=".repeat(40));
+				System.out.println("=".repeat(50));
 				return;
 			}
 		}
