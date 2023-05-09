@@ -16,14 +16,15 @@ import com.callor.classes.service.StudentService;
  */
 
 public class ScoreServiceImplV3 implements ScoreService{
-	StudentService stService = new StudentServiceImplV1();
+	private StudentService stService;
 	private List<ScoreDto> scList;
 	private List<StudentDto> stList;
 	private int barNum = 80;
 	
 	public ScoreServiceImplV3() {
-		this.scList = new ArrayList<>();
-		this.stList = new ArrayList<>();
+		this.scList 	= new ArrayList<>();
+		this.stList 	= new ArrayList<>();
+		this.stService  = new StudentServiceImplV1();
 	}
 	@Override
 	public void makeScore() {
@@ -51,6 +52,7 @@ public class ScoreServiceImplV3 implements ScoreService{
 
 	@Override
 	public void printScore() {
+		
 		stService.loadStudent();
 		
 		System.out.println("=".repeat(barNum));
