@@ -3,7 +3,9 @@ package com.callor.classes.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.callor.classes.models.ScData;
+import com.callor.classes.config.Line;
+import com.callor.classes.datas.DataIndex;
+import com.callor.classes.datas.DataSource;
 import com.callor.classes.models.ScoreDto;
 import com.callor.classes.models.StudentDto;
 import com.callor.classes.service.ScoreService;
@@ -15,46 +17,43 @@ import com.callor.classes.service.StudentService;
  *   메서드를 한개라도 생략하면 문법오류가 발생한다
  */
 
-public class ScoreServiceImplV3 implements ScoreService{
-	private StudentService stService;
-	private List<ScoreDto> scList;
-	private List<StudentDto> stList;
+public class ScoreServiceImplV1 implements ScoreService{
+	protected StudentService stService;
+	protected List<ScoreDto> scList;
 	private int barNum = 80;
-	String 갈한수;
 	
-	public ScoreServiceImplV3() {
+	public ScoreServiceImplV1() {
 		this.scList 	= new ArrayList<>();
-		this.stList 	= new ArrayList<>();
 		this.stService  = new StudentServiceImplV1();
 	}
-	@Override
-	public void makeScore() {
-		for(String str : ScData.SCORE) {
-			String[] student = str.split(",");
-			ScoreDto scDto = new ScoreDto(
-					student[ScData.ST_NUM],
-					Integer.valueOf(student[ScData.ST_KOR]),
-					Integer.valueOf(student[ScData.ST_ENG]),
-					Integer.valueOf(student[ScData.ST_MATH]),
-					Integer.valueOf(student[ScData.ST_MUSIC]),
-					Integer.valueOf(student[ScData.ST_ART]),
-					Integer.valueOf(student[ScData.ST_SOFTWARE]),
-					Integer.valueOf(student[ScData.ST_DATABASE])
-			);
-			scList.add(scDto);
-		}
+	
+	public ScoreDto str2Dto(String str) {
+		String[] score = str.split(",");
+		ScoreDto scDto = new ScoreDto(
+				score[DataIndex.SCORE.ST_NUM],
+				Integer.valueOf(score[DataIndex.SCORE.SC_KOR]),
+				Integer.valueOf(score[DataIndex.SCORE.SC_ENG]),
+				Integer.valueOf(score[DataIndex.SCORE.SC_MATH]),
+				Integer.valueOf(score[DataIndex.SCORE.SC_MUSIC]),
+				Integer.valueOf(score[DataIndex.SCORE.SC_ART]),
+				Integer.valueOf(score[DataIndex.SCORE.SC_SOFTWARE]),
+				Integer.valueOf(score[DataIndex.SCORE.SC_DATABASE])
+		);
+		return scDto;
 	}
-
+	
 	@Override
-	public void makeScore(List<ScoreDto> scList) {
-		// TODO Auto-generated method stub
-		
+	public void loadScore() {
+		for(String str : DataSource.SCORE) {
+			scList.add(str2Dto(str));
+		}
 	}
 
 	@Override
 	public void printScore() {
 		stService.loadStudent();
 		
+//		System.out.println(Line.dLine(100));
 		System.out.println("=".repeat(barNum));
 		System.out.print("학번\t");
 		System.out.print("이름\t");
@@ -65,11 +64,19 @@ public class ScoreServiceImplV3 implements ScoreService{
 		System.out.print("음악\t");
 		System.out.print("미술\n");
 		System.out.println("-".repeat(barNum));
+//		System.out.println(Line.sLine(100));
+		
 		for(ScoreDto dto : scList) {
-			StudentDto dto1 = stService.getStudent(dto.getStNum());
+			StudentDto stDto = stService.getStudent(dto.getStNum());
+			
 			System.out.print(dto.getStNum() 	+ "\t");
-			System.out.print(dto1.stName	 	+ "\t");
-			System.out.print(dto1.stDept	 	+ "\t");
+			if(stDto.stNum != null) {
+				System.out.print(stDto.stName	 	+ "\t");
+				System.out.print(stDto.stDept	 	+ "\t");
+			}else {
+				System.out.print("-\t");
+				System.out.print("-\t\t");
+			}
 			System.out.print(dto.getScKor() 	+ "\t");
 			System.out.print(dto.getScEng() 	+ "\t");
 			System.out.print(dto.getScMath() 	+ "\t");
@@ -78,10 +85,5 @@ public class ScoreServiceImplV3 implements ScoreService{
 		}
 		System.out.println("=".repeat(barNum));
 	}
-
-	@Override
-	public void printScore(List<ScoreDto> scList) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

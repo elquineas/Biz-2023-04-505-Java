@@ -20,7 +20,9 @@
    git remote add origin https://github.com/elquineas/Biz-2023-04-java.git
    git remote add origin https://github.com/elquineas/Biz-2023-505-java.git
    git remote add origin https://github.com/elquineas/Biz-2023-04-505-Java.git
+   git remote add origin https://github.com/elquineas/Java_Homework.git
    ```
+
 
 ### 기존의 repository에 계속해서 update 하고자 할 때
 5. 현재 폴더의 파일과 폴더를 
@@ -46,4 +48,8 @@ git commit -m "first commit"
 git branch -M master
 git remote add origin https://github.com/elquineas/Biz-2023-04-java.git (처음1회)
 git push -u origin master
+```
+
+```clone
+git clone https://github.com/elquineas/Java_Homework.git
 ```
