@@ -18,4 +18,12 @@ public class DataIndex {
 		public static final int  AUTEL     = 2;
 		public static final int  AUADDRESS = 3;
 	}
+	
+	public static class PUBLISHER{
+		public static final int  PCODE    = 0;
+		public static final int  PNAME    = 1;
+		public static final int  PCEO     = 2;
+		public static final int  PTEL     = 3;
+		public static final int  PADDRESS = 4;
+	}
 }
