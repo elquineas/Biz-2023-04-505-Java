@@ -48,7 +48,7 @@ public class GuideServiceImplV1 implements GuideService{
 
 	@Override
 	public void printGuideList() {
-		System.out.println("=".repeat(100));
+		System.out.println("=".repeat(150));
 		System.out.printf("%s\t","﻿ID");
 		System.out.printf("%-20s\t\t","﻿종목명");
 		System.out.printf("%s\t","﻿순서");
@@ -57,7 +57,7 @@ public class GuideServiceImplV1 implements GuideService{
 		for(GuideDto dto : gList) {
 //			System.out.println(dto.guId +" : "+id);
 			if(!dto.guId.equals(id)) {
-				System.out.println("-".repeat(100));
+				System.out.println("-".repeat(150));
 			}
 			System.out.printf("%s\t",dto.guId);
 			System.out.printf("%-20s\t",dto.guList);
@@ -65,7 +65,7 @@ public class GuideServiceImplV1 implements GuideService{
 			System.out.printf("%s\n",dto.guGuide);
 			id = dto.guId;
 		}
-		System.out.println("=".repeat(100));
+		System.out.println("=".repeat(150));
 	}
 
 }
