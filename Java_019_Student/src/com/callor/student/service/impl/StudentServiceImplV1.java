@@ -1,11 +1,15 @@
 package com.callor.student.service.impl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import com.callor.student.models.StudentDto;
 import com.callor.student.service.StudentService;
+import com.callor.student.utils.Config;
 import com.callor.student.utils.Line;
 
 public class StudentServiceImplV1 implements StudentService{
@@ -19,23 +23,7 @@ public class StudentServiceImplV1 implements StudentService{
 	
 	@Override
 	public void loadStudent() {
-//		StudentDto sDto = new StudentDto();
-//		System.out.println(Line.dLine(100));
-//		System.out.println("학생 정보를 입력해주세요.");
-//		System.out.println(Line.sLine(100));
-//		System.out.print("학번 >> ");
-//		sDto.stNum = scan.nextLine();
-//		System.out.print("이름 >> ");
-//		sDto.stName = scan.nextLine();
-//		System.out.print("학과 >> ");
-//		sDto.stDept = scan.nextLine();
-//		System.out.print("학년 >> ");
-//		String grade = scan.nextLine();
-//		sDto.stGrade = Integer.valueOf(grade);
-//		System.out.print("전화번호 >> ");
-//		sDto.stTel = scan.nextLine();
-//		stList.add(sDto);
-			
+		
 	}
 
 	@Override
@@ -56,9 +44,9 @@ public class StudentServiceImplV1 implements StudentService{
 			System.out.printf("%s\t",dto.stDept);
 			System.out.printf("%d\t",dto.stGrade);
 			System.out.printf("%s\n",dto.stTel);
-			if(index != stList.size()) {
-				System.out.println(Line.sLine(100));
-			}
+//			if(index != stList.size()) {
+//				System.out.println(Line.sLine(100));
+//			}
 		}
 		System.out.println(Line.dLine(100));
 	}
@@ -66,20 +54,33 @@ public class StudentServiceImplV1 implements StudentService{
 	public void insertStudent() {
 		
 		System.out.println(Line.dLine(60));
-		System.out.println("학생 정보 추가(종료/QUIT)");
-		System.out.println(Line.sLine(60));
 		while(true) {
-			System.out.print("학번 >> ");
-			String stNum = scan.nextLine();
-			if(stNum.equals("QUIT")) break;
+			System.out.println("학생 정보 추가(종료/QUIT)");
+			System.out.println(Line.sLine(60));
+			
+			String stNum = null;
+			int num = 0;
+			while(true) {
+				System.out.print("학번(정수) >> ");
+				stNum = scan.nextLine();
+				try {
+					num = (Integer.valueOf(stNum));
+					stNum = String.format("%04d",num);
+				} catch (Exception e) {
+					if(stNum.toUpperCase().equals("QUIT")) break;
+					System.out.println("숫자를 입력해주세요");
+				}
+				if(num > 0 && num<10000) break;
+			}
+			if(stNum.toUpperCase().equals("QUIT")) break;
 			
 			System.out.print("이름 >> ");
 			String stName = scan.nextLine();
-			if(stName.equals("QUIT")) break;
+			if(stName.toUpperCase().equals("QUIT")) break;
 			
 			System.out.print("학과 >> ");
 			String stDept = scan.nextLine();
-			if(stDept.equals("QUIT")) break;
+			if(stDept.toUpperCase().equals("QUIT")) break;
 			
 			String grade;
 			while(true) {
@@ -91,17 +92,17 @@ public class StudentServiceImplV1 implements StudentService{
 				} catch (Exception e) {
 					System.out.println("숫자를 입력해주세요");
 				}
-				if(grade.equals("QUIT") || (grade1 > 0 && grade1 < 5)) break;
+				if(grade.toUpperCase().equals("QUIT") || (grade1 > 0 && grade1 < 5)) break;
 				if(grade1 < 1 || grade1 > 4) {
 					System.out.println("1~4 사이의 수를 입력해야합니다.");
 					continue;
 				}
 			}
-			if(grade.equals("QUIT")) break;
+			if(grade.toUpperCase().equals("QUIT")) break;
 			
 			System.out.print("전화번호 >> ");
 			String stTel = scan.nextLine();
-			if(stTel.equals("QUIT")) break;
+			if(stTel.toUpperCase().equals("QUIT")) break;
 			
 			StudentDto sDto = new StudentDto();
 			sDto.stNum   = stNum;
