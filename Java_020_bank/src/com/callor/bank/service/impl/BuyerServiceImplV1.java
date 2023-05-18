@@ -39,9 +39,9 @@ public class BuyerServiceImplV1 implements BuyerService {
 			System.out.println(Config.BUYER_FILE + " 해당 파일이 없습니다.");
 		}
 		
-		scan = new Scanner(is);
-		while(scan.hasNext()) {
-			String line   = scan.nextLine();
+		Scanner fileScan = new Scanner(is);
+		while(fileScan.hasNext()) {
+			String line   = fileScan.nextLine();
 			String[] data = line.split("\t");
 			
 			BuyerDto buDto = new BuyerDto();
@@ -53,11 +53,19 @@ public class BuyerServiceImplV1 implements BuyerService {
 			buDto.buJob   = data[Index.BUYER.BU_JOB];
 			buList.add(buDto);
 		}	
-		printBuyerList();	
+//		printBuyerList();	
 	}
 
 	@Override
 	public BuyerDto getBuyer(String buId) {
+		if(buList.isEmpty()) {
+			loadBuyer();
+		}
+		for(BuyerDto dto : buList) {
+			if(dto.buId.equals(buId)) {
+				return dto;
+			}
+		}
 		return null;
 	}
 
@@ -203,10 +211,10 @@ public class BuyerServiceImplV1 implements BuyerService {
 		System.out.println(Line.dLine(100));
 		System.out.println("고객정보 리스트");
 		System.out.println(Line.sLine(100));
-		System.out.println("고객ID\t고객명\t전화번호\t주소\t생년월일\t직업");
+		System.out.println("고객ID\t고객명\t전화번호\t주소\t\t생년월일\t직업");
 		printBuyerList(out);
+		out.println(Line.dLine(100));
 		out.close();
-		System.out.println(Line.dLine(100));
 	}
 
 

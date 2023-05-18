@@ -31,7 +31,7 @@ public interface AccService {
 	 * 
 	 */
 	public void printAccList();		// 계좌 리스트 출력
-
+	public void printAccList(PrintWriter out);
 	public void saveAccList();		// 계좌 리스트 저장
 	public void loadAccList();		// 계좌 데이터 읽어오기
 

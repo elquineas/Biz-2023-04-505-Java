@@ -20,6 +20,6 @@ public class BankExecA {
 //		out.close();
 //		buService.printBuyerList();
 
-		acService.inout();
+		acService.accInit();
 	}
 }
