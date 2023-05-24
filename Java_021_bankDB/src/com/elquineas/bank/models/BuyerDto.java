@@ -1,4 +1,4 @@
-package com.elquineas.bank.exec;
+package com.elquineas.bank.models;
 
 public class BuyerDto {
 	

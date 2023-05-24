@@ -2,7 +2,7 @@ package com.elquineas.bank.service;
 
 import java.util.List;
 
-import com.elquineas.bank.exec.BuyerDto;
+import com.elquineas.bank.models.BuyerDto;
 
 public interface BuyerService {
 

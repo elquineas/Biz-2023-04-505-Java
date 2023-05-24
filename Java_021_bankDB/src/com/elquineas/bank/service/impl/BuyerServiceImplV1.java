@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.elquineas.bank.config.DBConnection;
 import com.elquineas.bank.config.DBContract;
-import com.elquineas.bank.exec.BuyerDto;
+import com.elquineas.bank.models.BuyerDto;
 import com.elquineas.bank.service.BuyerService;
 
 public class BuyerServiceImplV1 implements BuyerService{
@@ -132,18 +132,16 @@ public class BuyerServiceImplV1 implements BuyerService{
 	public List<BuyerDto> selectAll() {
 		List<BuyerDto> buyerList = new ArrayList<>();
 //		buyerList.clear();
-		String sql = 
-				"SELECT "
-				+"buid, buname, butel, buaddr, bubirth, bujob "
-				+"FROM  tbl_buyer "
-				+"ORDER BY buid ";
+		String sql = "SELECT   buid, buname, butel, buaddr, bubirth, bujob "
+				   + "FROM     tbl_buyer "
+				   + "ORDER BY buid ";
 		try {
 			PreparedStatement pStr = dbConn.prepareStatement(sql);
 			ResultSet result = pStr.executeQuery();
 			
 			while(result.next()) {
 				BuyerDto buyerDto = result2Dto(result);
-				buyerList.add(buyerDto);				
+				buyerList.add(buyerDto);
 			}
 			return buyerList;
 			
