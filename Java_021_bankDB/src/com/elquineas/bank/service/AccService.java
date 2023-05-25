@@ -13,7 +13,8 @@ public interface AccService {
 	// 결과가 1개라는 확신이 있더라도 List로 취급해야한다.
 //	public AccDto findById(String acbuid);
 	public List<AccDto> db2List(PreparedStatement pStr) throws SQLException;
-	public List<AccDto> findById(String acbuid);
+	public AccDto findByAcNum(String acNum);
+	public List<AccDto> findByBuId(String acbuid);
 	
 	public int insert(AccDto dto);
 	public int update(AccDto dto);

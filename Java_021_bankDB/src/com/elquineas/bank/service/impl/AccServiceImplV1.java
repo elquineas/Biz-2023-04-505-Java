@@ -56,32 +56,31 @@ public class AccServiceImplV1 implements AccService {
 		return null;
 	}
 
-//	@Override
-//	public AccDto findById(String acbuid) {
-//		List<AccDto> accList = new ArrayList<>();
-//		String sql = "SELECT   acnum, acdiv, acbuid, acbalance " 
-//				   + "FROM     tbl_acc " 
-//				   + "WHERE    acbuid = ? "
-//				   + "ORDER BY acnum ";
-//		try {
-//			PreparedStatement pStr = dbConn.prepareStatement(sql);
-//			pStr.setString(1, acbuid);
-//			ResultSet result =  pStr.executeQuery();
-//			
-//			AccDto accDto = result2Dto(result);
-//			id(accDto.next()){
-//				return accDto;		
-//			}
-//			pStr.close();
-//			result.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
+	@Override
+	public AccDto findByAcNum(String acNum) {
+		String sql = "SELECT   acnum, acdiv, acbuid, acbalance " 
+				   + "FROM     tbl_acc " 
+				   + "WHERE    acnum = ? ";
+		try {
+			PreparedStatement pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, acNum);
+			ResultSet result =  pStr.executeQuery();
+			
+			AccDto accDto = null;
+			while(result.next()) {
+				accDto = result2Dto(result);
+			}
+			pStr.close();
+			result.close();
+			return accDto;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	@Override
-	public List<AccDto> findById(String acbuid) {
+	public List<AccDto> findByBuId(String acbuid) {
 		String sql = "SELECT   acnum, acdiv, acbuid, acbalance " 
 				   + "FROM     tbl_acc " 
 				   + "WHERE    acbuid = ? "
@@ -119,9 +118,21 @@ public class AccServiceImplV1 implements AccService {
 
 	@Override
 	public int update(AccDto dto) {
+		String sql = "UPDATE tbl_acc "
+				   + "   SET acbalance  = ? "
+				   + " WHERE acNum      = ? ";
+		try {
+			PreparedStatement pStr = dbConn.prepareStatement(sql);
+			pStr.setInt(1, dto.acBalance);
+			pStr.setString(2, dto.acNum);
+			
+			return pStr.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
-
+	
 	@Override
 	public int delete(String acbuid) {
 		return 0;
@@ -136,10 +147,12 @@ public class AccServiceImplV1 implements AccService {
 			pStr.setString(1, date);
 			ResultSet result = pStr.executeQuery();
 			if(result.next()) {
-				return result.getString(1);
+				String MaxNum = result.getString(1);
+				if(MaxNum == null) return "0";
+				else return result.getString(1);
+				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "0";

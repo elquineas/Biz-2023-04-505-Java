@@ -8,22 +8,29 @@ import java.util.Scanner;
 
 import com.elquineas.bank.config.DBContract;
 import com.elquineas.bank.models.AccDto;
+import com.elquineas.bank.models.AccListDto;
 import com.elquineas.bank.models.BuyerDto;
+import com.elquineas.bank.service.impl.AccListServiceImplV1;
 import com.elquineas.bank.service.impl.AccServiceImplV1;
 import com.elquineas.bank.service.impl.BuyerServiceImplV1;
+import com.elquineas.bank.utils.AnsiConsol;
 
 public class BankService {
 	protected List<BuyerDto> buyerList;
 	protected final BuyerService buService;
 	protected List<AccDto> accList;
 	protected final AccService accService;
+	protected List<AccListDto> aclList;
+	protected final AccListService accListService;
 	protected final Scanner scan;
 	
 	public BankService() {
-		buyerList  = new ArrayList<>();
-		buService  = new BuyerServiceImplV1();
-		accList    =  new ArrayList<>();
-		accService =  new AccServiceImplV1();
+		buyerList  		= new ArrayList<>();
+		buService  		= new BuyerServiceImplV1();
+		accList    		= new ArrayList<>();
+		accService 		= new AccServiceImplV1();
+		aclList    		= new ArrayList<>();
+		accListService 	= new AccListServiceImplV1();
 		scan = new Scanner(System.in);
 	}
 	
@@ -172,8 +179,8 @@ public class BankService {
 		System.out.println("=".repeat(100));
 		System.out.println("조회할 아이디를 입력해주세요.");
 		System.out.print(">>>");
-		String id = scan.nextLine();
-		accList = accService.findById(id);
+		String strId = scan.nextLine();
+		
 		
 		if(accList == null) {
 			System.out.println("조회한 고객ID는 없는 데이터 입니다.");
@@ -192,7 +199,7 @@ public class BankService {
 		System.out.print("ID >>> ");
 		String strId = scan.nextLine();
 		BuyerDto buyerDto = buService.findById(strId);
-		accList = accService.findById(strId);
+		accList = accService.findByBuId(strId);
 		if(buyerDto == null) {
 			System.out.println("조회한 고객ID는 없는 데이터 입니다.");
 			return;
@@ -302,10 +309,96 @@ public class BankService {
 		return newNum;
 	}
 	
+
+//=============================================== ACC LIST ===============================================
+		
+	public void insertAccList() {
+		printBuyerList();
+		findByUserInfo();
+		AccDto accDto = null;
+		System.out.println("=".repeat(100));
+		System.out.println("계좌번호를 입력해주세요.");
+		String strAcNum;
+		while(true) {
+			System.out.print(">>> ");
+			strAcNum = scan.nextLine();
+			accDto = accService.findByAcNum(strAcNum);
+			if(accDto == null)System.out.printf(AnsiConsol.RED("계좌번호( %s )를 다시 입력해주세요."),strAcNum);
+			else break;
+		}
+//		System.out.println(accDto.toString());
+		System.out.println("거래구분(1.입금, 2.출금, -1.종료)");
+		System.out.print(">>> ");
+		String strDiv = scan.nextLine();
+		int intInputMoney = 0;
+		int intOutputMoney = 0;
+		int total = accDto.acBalance;
+		while(true) {
+			System.out.println("거래금액");
+			System.out.print(">>> ");
+			String strMoney = scan.nextLine();
+			try {
+				if(strDiv.equals("1")) {
+					intInputMoney = Integer.valueOf(strMoney);
+					total += intInputMoney;
+				} else if(strDiv.equals("2")) {
+					intOutputMoney = Integer.valueOf(strMoney);
+					if(intOutputMoney > accDto.acBalance) {
+						System.out.println(AnsiConsol.RED("잔액이 부족합니다."));
+						continue;
+					}else {
+						total -= intOutputMoney;
+						break;
+					}
+				} else if(strDiv.equals("-1")) {
+					System.out.println(AnsiConsol.BLUE("종료합니다."));
+					return;
+				}
+			} catch (Exception e) {
+				System.out.println(AnsiConsol.RED("숫자만 입력해야합니다."));
+				continue;
+			}
+		}
+		AccListDto accListDto = new AccListDto();
+		accListDto.acNum = strAcNum;
+		accListDto.aioDate = getTodayDate();
+		accListDto.aioTime = getTodayTime();
+		accListDto.aioDiv = strDiv;
+		accListDto.aioInput = intInputMoney;
+		accListDto.aioOutput = intOutputMoney;
+		
+
+		accDto.acNum = strAcNum;
+		accDto.acBalance = total;
+		
+		int result = accListService.insert(accListDto);
+		if(result < 1) {
+			System.err.println("거래실패");
+			return;
+		}
+		
+		int result2 = accService.update(accDto);
+		if(result2 < 1) {
+			System.err.println("거래실패");
+			return;
+		}
+		
+		System.out.println("거래가 완료되었습니다.");
+	}
 	
 	
-	
-	
+	protected String getTodayDate() {
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat todayFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String todayString = todayFormat.format(date);
+		return todayString;
+	}
+	protected String getTodayTime() {
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat timeFormat  = new SimpleDateFormat("HH:mm:ss");
+		String timeString  = timeFormat.format(date);
+		return timeString;
+	}
 	
 	
 	
