@@ -3,10 +3,10 @@ package com.callor.shop.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.callor.shop.models.IoListDto;
-import com.callor.shop.models.ProductDto;
 
 public interface IoListDao {
 
@@ -21,17 +21,23 @@ public interface IoListDao {
 	public List<IoListDto> ioList();
 
 	@Select(" SELECT * FROM tbl_iolist "
-		  + " WHERE ioDate between #{arg0} AND #{arg1} ")
-	public List<IoListDto> ioDateList(String arg0, String arg1);
+		  + " WHERE ioDate between #{strdate1} AND #{strdate2} ")
+	public List<IoListDto> ioDateList(
+			@Param("strdate1") String strdate1, 
+			@Param("strdate2") String strdate2);
 	
 	@Select(" SELECT * FROM tbl_iolist A, tbl_product B "
 		  + " WHERE A.ioPCode = B.pCode AND B.pName LIKE '%' || #{pName} || '%' ")
 	public List<IoListDto> ioCodeList(String pName);
 	
 	@Select(" SELECT * FROM tbl_iolist "
-		  + " WHERE iobuid = #{arg0} "
-		  + " AND   ioDate between #{arg1} AND #{arg2} ")
-	public List<IoListDto> ioIdDateList(String arg0, String arg1, String arg2);
+		  + " WHERE iobuid = #{strbuId} "
+		  + " AND   ioDate between #{strdate1} AND #{strdate2} ")
+	public List<IoListDto> ioIdDateList(
+			@Param("strbuId") String strbuId, 
+			@Param("strdate1") String strdate1, 
+			@Param("strdate2") String strdate2);
+//	strbuId,strdate1,strdate2
 	
 	
 	
